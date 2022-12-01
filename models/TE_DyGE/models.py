@@ -8,6 +8,8 @@ FLAGS = flags.FLAGS
 # Boilerplate parts of this code file were originally forked from
 # https://github.com/tkipf/gcn
 # which itself was very inspired by the keras package
+# The model framework are forked from DySAT 
+# https://github.com/aravindsankar28/DySAT 
 
 class Model(object):
     def __init__(self, **kwargs):
@@ -74,12 +76,12 @@ class Model(object):
         print("Model restored from file: %s" % save_path)
 
 
-class DySAT(Model):
+class TE_DyGE(Model):
     def _accuracy(self):
         pass
 
     def __init__(self, placeholders, num_features, num_features_nonzero, degrees, **kwargs):
-        super(DySAT, self).__init__(**kwargs)
+        super(TE_DyGE, self).__init__(**kwargs)
         self.attn_wts_all = []
         self.temporal_attention_layers = []
         self.structural_attention_layers = []
