@@ -1,6 +1,8 @@
 from __future__ import print_function
 import numpy as np
 import networkx as nx
+from datetime import datetime
+from datetime import timedelta
 import tensorflow as tf
 from collections import defaultdict
 from sklearn.preprocessing import MultiLabelBinarizer
@@ -39,12 +41,13 @@ def run_random_walks_n2v(graph, nodes, num_walks=1, walk_len=4):
     walk_len = FLAGS.walk_len
     nx_G = nx.Graph()
     adj = nx.adjacency_matrix(graph)
-    for e in graph.edges():
-        nx_G.add_edge(e[0], e[1])
+    for e0,e1,t in graph.edges(data=True):
+        t = int(t['date'].timestamp())
+        print((e0,e1,t))
+        nx_G.add_edge(e0, e1,date=t)
 
     for edge in graph.edges():
         nx_G[edge[0]][edge[1]]['weight'] = adj[edge[0], edge[1]]
-
     G = Graph_RandomWalk(nx_G, False, 1.0, 1.0)
     G.preprocess_transition_probs()
     walks = G.simulate_walks(num_walks, walk_len)
