@@ -13,7 +13,7 @@ np.random.seed(123)
 
 def load_graphs(dataset_str):
     """Load graph snapshots given the name of dataset"""
-    graphs = np.load("data/{}/{}".format(dataset_str, "graphs.npz"), allow_pickle=True)['graph']
+    graphs = np.load("data/{}/{}".format(dataset_str, "graphs.npz"), allow_pickle=True,fix_imports=True)['graph']
     print("Loaded {} graphs ".format(len(graphs)))
     adj_matrices = map(lambda x: nx.adjacency_matrix(x), graphs)
     return graphs, adj_matrices
@@ -99,18 +99,18 @@ def get_context_pairs_incremental(graph):
 
 def get_context_pairs(graphs, num_time_steps):
     """ Load/generate context pairs for each snapshot through random walk sampling."""
-    load_path = "data/{}/train_pairs_trw_{}.pkl".format(FLAGS.dataset, str(num_time_steps - 2))
-    #load_path = "data/{}/train_pairs_n2v_{}.pkl".format(FLAGS.dataset, str(num_time_steps - 2))
-    try:
-        context_pairs_train = dill.load(open(load_path, 'rb'))
-        print("Loaded context pairs from pkl file directly")
-    except (IOError, EOFError):
-        print("Computing training pairs ...")
-        context_pairs_train = []
-        for i in range(0, num_time_steps):
-            context_pairs_train.append(run_random_walks_n2v(graphs[i], graphs[i].nodes()))
-        dill.dump(context_pairs_train, open(load_path, 'wb'))
-        print ("Saved pairs")
+    #load_path = "data/{}/train_pairs_trw_{}.pkl".format(FLAGS.dataset, str(num_time_steps - 2))
+    load_path = "data/{}/train_pairs_test_{}.pkl".format(FLAGS.dataset, str(num_time_steps - 2))
+    # try:
+    #     context_pairs_train = dill.load(open(load_path, 'rb'))
+    #     print("Loaded context pairs from pkl file directly")
+    # except (IOError, EOFError):
+    print("Computing training pairs ...")
+    context_pairs_train = []
+    for i in range(0, num_time_steps):
+        context_pairs_train.append(run_random_walks_n2v(graphs[i], graphs[i].nodes()))
+    # dill.dump(context_pairs_train, open(load_path, 'wb'))
+    # print ("Saved pairs")
 
     return context_pairs_train
 

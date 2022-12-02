@@ -11,7 +11,7 @@ import scipy
 
 from eval.link_prediction import evaluate_classifier, write_to_csv
 from flags import *
-from models.DySAT.models import DySAT
+from models.TE_DyGE.models import TE_DyGE
 from utils.minibatch import *
 from utils.preprocess import *
 from utils.utilities import *
@@ -119,7 +119,7 @@ loaded_pairs = False
 # Load training context pairs (or compute them if necessary)
 context_pairs_train = get_context_pairs(graphs, num_time_steps)  ## random walk
 print("*****************")
-print(context_pairs_train)
+# print(context_pairs_train)
 
 # Load evaluation data.
 train_edges, train_edges_false, val_edges, val_edges_false, test_edges, test_edges_false = \
@@ -134,6 +134,7 @@ for e in graphs[num_time_steps - 2].edges():
     new_G.add_edge(e[0], e[1])
 
 graphs[num_time_steps - 1] = new_G
+
 adjs[num_time_steps - 1] = nx.adjacency_matrix(new_G)
 
 print("# train: {}, # val: {}, # test: {}".format(len(train_edges), len(val_edges), len(test_edges)))
@@ -183,7 +184,7 @@ minibatchIterator = NodeMinibatchIterator(graphs, feats_train, adj_train,
                                           context_pairs=context_pairs_train)
 print("# training batches per epoch", minibatchIterator.num_training_batches())
 
-model = DySAT(placeholders, num_features, num_features_nonzero, minibatchIterator.degs)
+model = TE_DyGE(placeholders, num_features, num_features_nonzero, minibatchIterator.degs)
 sess.run(tf.global_variables_initializer())
 
 # Result accumulator variables.

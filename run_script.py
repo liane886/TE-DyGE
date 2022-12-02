@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser(description='Run script parameters')
 
 parser.add_argument('--min_time', type=int, nargs='?', default=2, help='min_time step')
 
-parser.add_argument('--max_time', type=int, nargs='?', default=16, help='max_time step')
+parser.add_argument('--max_time', type=int, nargs='?', default=15, help='max_time step')
 
 # NOTE: Ensure that the execution is split into different ranges so that GPU memory errors are avoided.
 # IncSAT must be executed sequentially
@@ -25,8 +25,8 @@ parser.add_argument('--run_parallel', type=str, nargs='?', default='False',
                     help='By default, sequential execution of different time steps (Note: IncSAT must be sequential)')
 
 # Necessary parameters for log creation.
-parser.add_argument('--base_model', type=str, nargs='?', default='DySAT',
-                    help='Base model (DySAT/IncSAT)')
+parser.add_argument('--base_model', type=str, nargs='?', default='TE_DyGE',
+                    help='Base model')
 
 # Additional model string to save different parameter variations.
 parser.add_argument('--model', type=str, nargs='?', default='default',
@@ -147,7 +147,7 @@ with open(output_dir + '/flags_{}.txt'.format(args.dataset), 'w') as outfile:
 
 # Dump args to flags file.
 
-train_file = "train.py" if args.base_model == "DySAT" else "train_incremental.py"
+train_file = "train.py" if args.base_model == "TE_DyGE" else "train_incremental.py"
 
 # Here, t=2 => learn on graph (idx = 0) and predict the links of graph (idx = 1).
 commands = []
@@ -168,7 +168,7 @@ def str2bool(v):
 
 print ("Args parallel param: ", args.run_parallel)
 
-if str2bool(args.run_parallel) and args.base_model == 'DySAT':
+if str2bool(args.run_parallel) and args.base_model == 'TE_DyGE':
     print ("Running time steps {} to {} in parallel on GPU {}".format(args.min_time, args.max_time, args.GPU_ID))
     processes = []
     for cmd in commands:
