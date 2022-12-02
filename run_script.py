@@ -22,7 +22,7 @@ parser.add_argument('--max_time', type=int, nargs='?', default=15, help='max_tim
 # IncSAT must be executed sequentially
 
 parser.add_argument('--run_parallel', type=str, nargs='?', default='False',
-                    help='By default, sequential execution of different time steps (Note: IncSAT must be sequential)')
+                    help='By default, sequential execution of different time steps ')
 
 # Necessary parameters for log creation.
 parser.add_argument('--base_model', type=str, nargs='?', default='TE_DyGE',
