@@ -3,7 +3,10 @@
 
 
 ![TE-DyGE: Temporal Evolution-enhanced Dynamic Graph Embedding Network](tedyge.png)
-
+## Implementation
+```
+https://github.com/liane886/TE-DyGE
+```
 ## Setup
 ```
 conda env create -f TE_DyGE.yml
