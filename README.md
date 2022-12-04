@@ -18,7 +18,7 @@ python run_script.py
 ```
 ## Dataset 
 Statistics of dataset:
-![dataset](data/dataset.png)
+![dataset](data/Dataset.png)
 
 ## Acknowledgement
 The original version of this code base was originally forked from [DySAT] https://github.com/aravindsankar28/DySAT 
