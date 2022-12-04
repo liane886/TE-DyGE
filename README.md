@@ -1,4 +1,15 @@
 # TE-DyGE
+
+## Setup
+```
+conda env create -f TE_DyGE.yml
+```
+## Example Usage
+To reproduce the experiments on EComm dataset, simply run:
+```
+python run_script.py
+```
+
 ### Acknowledgement
 The original version of this code base was originally forked from [DySAT] https://github.com/aravindsankar28/DySAT 
 ```
