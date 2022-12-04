@@ -1,4 +1,4 @@
-#TE-DyGE: Temporal Evolution-enhanced Dynamic Graph Embedding Network
+# TE-DyGE: Temporal Evolution-enhanced Dynamic Graph Embedding Network
 ## Framework
 
 
