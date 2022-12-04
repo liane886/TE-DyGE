@@ -18,7 +18,11 @@ python run_script.py
 ```
 ## Dataset 
 Statistics of dataset:
+
 ![dataset](data/Dataset.png)
+
+## Results
+The Results for each snapshpot can be found in logs file.
 
 ## Acknowledgement
 The original version of this code base was originally forked from [DySAT] https://github.com/aravindsankar28/DySAT 
