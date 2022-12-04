@@ -22,7 +22,7 @@ Statistics of dataset:
 ![dataset](data/Dataset.png)
 
 ## Results
-The Results for each snapshpot can be found in logs file.
+Results for each snapshpot can be found in the 'logs' file.
 
 ## Acknowledgement
 The original version of this code base was originally forked from [DySAT] https://github.com/aravindsankar28/DySAT 
