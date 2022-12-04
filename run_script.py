@@ -51,6 +51,13 @@ parser.add_argument('--test_freq', type=int, nargs='?', default=1,
 parser.add_argument('--batch_size', type=int, nargs='?', default=512,
                     help='Batch size (# nodes)')
 
+# Walk length and num of walks for temporal random walk sampling.
+parser.add_argument('--walk_len', type=int, nargs='?', default=20,
+                    help='Walk length for random walk sampling')
+
+parser.add_argument('--num_walks', type=int, nargs='?', default=10,
+                    help='Num of walk  for random walk sampling')
+
 # 1-hot encoding is input as a sparse matrix - hence no scalability issue for large datasets.
 parser.add_argument('--featureless', type=str, nargs='?', default='True',
                     help='True if one-hot encoding.')
@@ -68,9 +75,7 @@ parser.add_argument('--use_residual', type=str, nargs='?', default='False',
 parser.add_argument('--neg_sample_size', type=int, nargs='?', default=10,
                     help='# negative samples per positive')
 
-# Walk length for random walk sampling.
-parser.add_argument('--walk_len', type=int, nargs='?', default=20,
-                    help='Walk length for random walk sampling')
+
 
 # Weight for negative samples in the binary cross-entropy loss function.
 parser.add_argument('--neg_weight', type=float, nargs='?', default=1.0,

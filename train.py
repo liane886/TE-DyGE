@@ -118,8 +118,8 @@ loaded_pairs = False
 
 # Load training context pairs (or compute them if necessary)
 context_pairs_train = get_context_pairs(graphs, num_time_steps)  ## random walk
-print("*****************")
-# print(context_pairs_train)
+# print("*****************")
+# print("context_pairs_train",context_pairs_train)
 
 # Load evaluation data.
 train_edges, train_edges_false, val_edges, val_edges_false, test_edges, test_edges_false = \

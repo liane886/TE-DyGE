@@ -11,7 +11,7 @@ FLAGS = flags.FLAGS
 """
 
 # General params for experiment setup - which need to be provided.
-flags.DEFINE_string('base_model', 'DySAT', 'Base model string. (DySAT/IncSAT)')
+flags.DEFINE_string('base_model', 'TE_DyGE', 'Base model string. ')
 flags.DEFINE_string('model', 'default', 'Model string.')
 
 flags.DEFINE_string('dataset', 'Enron_new', 'Dataset string.')
@@ -28,7 +28,8 @@ flags.DEFINE_integer('val_freq', 1, 'Validation frequency')
 
 # Tunable hyper-parameters.
 flags.DEFINE_integer('neg_sample_size', 10, 'number of negative samples')
-flags.DEFINE_integer('walk_len', 40, 'Walk len')
+flags.DEFINE_integer('walk_len', 4, 'Walk len')
+flags.DEFINE_integer('num_walks', 2, 'num of walk')
 flags.DEFINE_float('neg_weight', 1, 'Wt. for negative samples')
 flags.DEFINE_float('learning_rate', 0.001, 'Initial learning rate for self-attention model.')
 

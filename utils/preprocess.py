@@ -3,7 +3,7 @@ import numpy as np
 import networkx as nx
 import scipy.sparse as sp
 import tensorflow as tf
-from utilities import run_random_walks_n2v
+from utilities import run_temporal_random_walks
 import dill
 
 flags = tf.app.flags
@@ -94,24 +94,22 @@ def normalize_graph_gcn(adj):
 
 
 def get_context_pairs_incremental(graph):
-    return run_random_walks_n2v(graph, graph.nodes())
+    return run_temporal_random_walks(graph)
 
 
 def get_context_pairs(graphs, num_time_steps):
     """ Load/generate context pairs for each snapshot through random walk sampling."""
-    #load_path = "data/{}/train_pairs_trw_{}.pkl".format(FLAGS.dataset, str(num_time_steps - 2))
-    load_path = "data/{}/train_pairs_test_{}.pkl".format(FLAGS.dataset, str(num_time_steps - 2))
-    # try:
-    #     context_pairs_train = dill.load(open(load_path, 'rb'))
-    #     print("Loaded context pairs from pkl file directly")
-    # except (IOError, EOFError):
-    print("Computing training pairs ...")
-    context_pairs_train = []
-    for i in range(0, num_time_steps):
-        context_pairs_train.append(run_random_walks_n2v(graphs[i], graphs[i].nodes()))
-    # dill.dump(context_pairs_train, open(load_path, 'wb'))
-    # print ("Saved pairs")
-
+    load_path = "data/{}/train_pairs_trw_{}.pkl".format(FLAGS.dataset, str(num_time_steps - 2))
+    try:
+        context_pairs_train = dill.load(open(load_path, 'rb'))
+        print("Loaded context pairs from pkl file directly")
+    except (IOError, EOFError):
+        print("Computing training pairs ...")
+        context_pairs_train = []
+        for i in range(0, num_time_steps):
+            context_pairs_train.append(run_temporal_random_walks(graphs[i]))
+        dill.dump(context_pairs_train, open(load_path, 'wb'))
+        print ("Saved pairs")
     return context_pairs_train
 
 

@@ -25,73 +25,56 @@ class TemporalRandomWalk():
         # sampled_t = choice(timestamps, weights=probs)[0]
 
         valid_e = [e for e in edges if e[2].values()[0]==sampled_t]
-        print('sampled_t',sampled_t)
-        print(valid_e)
         # sampled_e = choice(valid_e)[0]
         sampled_e = random.choice(valid_e)
 
         return sampled_e
 
 
-    def Walk(self, walk_length):
+    def tr_Walk(self, walk_length):
 
         start_edges = self.sampling_edge()
-        self.walk = [start_edges[:2]]
         t = start_edges[-1].values()[0]
-        j = self.walk[-1][0]
-        print('t',t)
-        print('walk',self.walk)
-        print('j',j)
+        j = start_edges[0]
+        walk = [j]
         # Iterates until length of walk is reached 
         for _ in range(walk_length - 2):
-            
             # Compute in-between periods of time between source node and temporal neighbors
             cur_nbrs = list(self.G.edges(j,data=True))
             cur_nbrs = sorted(cur_nbrs, key = lambda x:x[2].values()[0])
-            # print('cur_nbrs',cur_nbrs)
             timestamps = np.array([e[2].values()[0] for e in cur_nbrs])
-            print("timestamps",timestamps)
             valid_times = timestamps[timestamps >= t]
-            print("valid_times",valid_times)
-            # valid_e = [e for e in edges if e[2].values()[0]==sampled_t]
-            # print(c)
-            # timesteps = np.array(list())
-            # valid_times = timesteps[timesteps >= t]
             delta_times = valid_times - t
-
             # Compute probability distribution of in-between period of times, according to strategy.
             # Then, sample timestep inl inear distribution 
             # r = scipy.stats.rankdata(delta_times, reverse=True)
             # probs = r / np.sum(r) 
             # # Sampling is temporally biased towards closest time-related neighbors
             # # sampled_t = random.choices(valid_times, weights=probs)[0] <- using distribution
-            sampled_t = random.choice(valid_times)
-
             # Randomly chose (uniform) node in events that occured at sampled time
             # neighbs = self.sg.data.get(j).get(sampled_t)
-
+            sampled_t = random.choice(valid_times)
+            neighbs = [v for u,v,t in self.G.edges(data=True) if t.values()[0] == sampled_t]
             # # sampled_n = random.choices(neighbs)[0]    <- using distribution
-            # sampled_n = random.choice(neighbs)
-            # self.walk.append(sampled_n)
-
+            sampled_n = random.choice(neighbs)
+            walk.append(sampled_n)
             # # Update current nodes and timestamp
-            # j = sampled_n
+            j = sampled_n
             t = sampled_t
+        return walk
+    # TODO: using distribution to sample the neighbors
 
+    def simulate_walks(self, num_walks, walk_length):
+        '''
+        Repeatedly simulate random walks from each node.
+        '''
+        G = self.G
+        walks = []
+        nodes = list(G.nodes())
+        for walk_iter in range(num_walks):
+            random.shuffle(nodes)
+            for node in nodes:
+                a = self.tr_Walk(walk_length)
+                walks.append(a)
 
-
-def load_graphs(dataset_str):
-    """Load graph snapshots given the name of dataset"""
-    graphs = np.load("../data/{}/{}".format(dataset_str, "graphs.npz"), allow_pickle=True,fix_imports=True)['graph']
-    print("Loaded {} graphs ".format(len(graphs)))
-    adj_matrices = map(lambda x: nx.adjacency_matrix(x), graphs)
-    return graphs, adj_matrices
-
-
-graphs,_ = load_graphs("Enron_new")
-print("Computing training pairs ...")
-context_pairs_train = []
-k = TemporalRandomWalk(graphs[0])
-k.Walk(3)
-# for i in range(0):
-#     context_pairs_train.append(k.Walk(graphs[i], graphs[i].nodes()))
+        return walks
