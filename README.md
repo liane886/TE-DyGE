@@ -19,7 +19,8 @@ python run_script.py
 ## Dataset 
 Statistics of dataset:
 
-![dataset](data/Dataset.png)
+#of nodes 143, #of links 2347, #of time steps 15 
+Data preprocesses are shown in data/preprocess.ipynb
 
 ## Results
 Results for each snapshpot can be found in the 'logs' file.
