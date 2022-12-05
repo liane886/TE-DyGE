@@ -3,6 +3,9 @@
 
 
 ![TE-DyGE: Temporal Evolution-enhanced Dynamic Graph Embedding Network](tedyge.png)
+## Implementation
+
+https://github.com/liane886/TE-DyGE
 
 ## Setup
 ```
@@ -13,8 +16,15 @@ To reproduce the experiments on EComm dataset, simply run:
 ```
 python run_script.py
 ```
+## Dataset 
+Statistics of dataset:
 
-### Acknowledgement
+![dataset](data/Dataset.png)
+
+## Results
+Results for each snapshpot can be found in the 'logs' file.
+
+## Acknowledgement
 The original version of this code base was originally forked from [DySAT] https://github.com/aravindsankar28/DySAT 
 ```
 @inproceedings{Xue2020DyHATR,
