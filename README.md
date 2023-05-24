@@ -9,7 +9,7 @@ https://github.com/liane886/TE-DyGE
 
 ## Setup
 ```
-conda env create -f TE_DyGE.yml
+conda env create -f TE_DyGE.yaml
 ```
 ## Example Usage
 To reproduce the experiments on EComm dataset, simply run:
